@@ -1,8 +1,168 @@
+" Vundle packages
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'christoomey/vim-tmux-navigator'
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'ervandew/supertab'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'jpalardy/vim-slime'
+Plugin 'kien/ctrlp.vim'
+
+call vundle#end()
+filetype plugin indent on
+
+syntax on
+
+"Information on the following setting can be found with
+":help set
+set tabstop=4
+set expandtab
+set autoindent 
+set shiftwidth=4  "this is the level of autoindent, adjust to taste
+set ruler
 set number
-ino jk <esc>
-ino kj <esc>
+set backspace=indent,eol,start
+set visualbell
+set hlsearch
+set incsearch
 
 set wildmode=longest,list,full
 set wildmenu
+ino jk <esc>
+ino kj <esc>
+cno jk <c-c>
+cno kj <c-c>
+" Uncomment below to make screen not flash on error
+" set vb t_vb=""
+" allow unsaved buffers in the background
 set hidden
-set ruler
+" Show buffers
+nnoremap <F8> :buffers<CR>:buffer<Space>
+cno <F8> <c-c> <CR>
+ino <F8> <esc>:buffers<CR>:buffer<Space>
+
+nno <F9> :b#<CR>
+ino <F9> <esc>:b#<CR>
+nnoremap ' `
+nnoremap ` '
+
+nno <leader>[ :bp<cr>
+nno <leader>] :bn<cr>
+
+set pastetoggle=<F4>
+colorscheme peachpuff
+
+"let mapleader = "."
+"nno \ .
+
+nno <leader>h :nohlsearch<CR>
+
+
+" tmux stuff
+if exists('$TMUX')
+  let g:tmux_navigator_no_mappings = 1
+  nno <silent> <c-h> :TmuxNavigateLeft<cr>
+  nno <silent> <c-j> :TmuxNavigateDown<cr>
+  nno <silent> <c-k> :TmuxNavigateUp<cr>
+  nno <silent> <c-l> :TmuxNavigateRight<cr>
+"  nno <silent> <c-\> :TmuxNavigatePrevious<cr>
+  ino <silent> <c-h> <esc>:TmuxNavigateLeft<cr>
+  ino <silent> <c-j> <esc>:TmuxNavigateDown<cr>
+  ino <silent> <c-k> <esc>:TmuxNavigateUp<cr>
+  ino <silent> <c-l> <esc>:TmuxNavigateRight<cr>
+"  ino <silent> <c-\> <esc>:TmuxNavigatePrevious<cr>
+else
+  ino <c-h> <esc><c-w>hi
+  ino <c-j> <esc><c-w>ji
+  ino <c-k> <esc><c-w>ki
+  ino <c-l> <esc><c-w>li
+"  ino <c-\> <esc><c-w><c-p>i
+  nno <c-h> <c-w>h
+  nno <c-j> <c-w>j
+  nno <c-k> <c-w>k
+  nno <c-l> <c-w>l
+"  nno <c-\> <c-w><c-p>
+endif
+
+"set shellcmdflag=-ic
+
+
+"set noshowmode
+let g:jedi#popup_on_dot = 0
+let g:jedi#show_call_signatures = ""
+let g:jedi#use_tabs_not_buffers = 0
+
+let g:SuperTabDefaultCompletionType = "context"
+
+" let g:ogs_app_url = 'https://code.dev.bloomberg.com/opengrok/'
+" let g:ogs_project = '/devgit/fipricing'
+" let g:ogs_browser_command = '/home/lchow41/bin/elinks'
+
+" slime options
+let g:slime_no_mappings = 1
+let g:slime_target = "tmux"
+let g:slime_python_ipython = 1
+nmap <c-c><c-c> <Plug>SlimeLineSend
+xmap <c-c><c-c> <Plug>SlimeRegionSend
+imap <c-c><c-c> <esc><Plug>SlimeLineSend
+nmap <c-c>v <Plug>SlimeConfig
+
+
+" fswitch mappings
+nmap <silent> <Leader>fsl :FSRight<cr>
+nmap <silent> <Leader>fsL :FSSplitRight<cr>
+nmap <silent> <Leader>fsh :FSLeft<cr>
+nmap <silent> <Leader>fsH :FSSplitLeft<cr>
+nmap <silent> <Leader>fsf :FSHere<cr>
+
+
+" tag stuff
+set tags=./tags;/
+map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+let g:ctrlp_extensions = ['tag']
+" need ctags -R .
+" or ctags -R -f ./.git/tags .
+
+" use space to toggle fold
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+
+
+augroup py
+    au FileType python setl foldmethod=indent foldnestmax=2
+    au BufRead *.script.py setl foldmethod=marker
+    au FileType python normal zR
+augroup END
+
+
+set splitright
+
+
+
+"" loading cscope
+"function! LoadCscope()
+"  let db = findfile("cscope.out", ".;")
+"  if (!empty(db))
+"    let path = strpart(db, 0, match(db, "/cscope.out$"))
+"    set nocscopeverbose " suppress 'duplicate connection' error
+"    exe "cs add " . db . " " . path
+"    set cscopeverbose
+"  endif
+"endfunction
+""au BufEnter /* call LoadCscope()
+"
+"if has("cscope")
+"    set cscopetag
+"
+"    " check cscope for definition of a symbol before checking ctags: set to 1
+"    " if you want the reverse search order.
+"    set csto=0
+"
+"    " show msg when any other cscope db added
+"    set cscopeverbose
+"endif
