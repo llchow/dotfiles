@@ -5,3 +5,5 @@
     ~/.tmux.conf: tmux.conf
     ~/.vimrc: vimrc
     ~/.vimrc_f: vimrc_f
+    ~/.note: note/
+    ~/bin: bin/
