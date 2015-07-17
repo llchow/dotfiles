@@ -1,0 +1,20 @@
+set nocompatible
+syntax on
+
+set tabstop=4
+set expandtab
+set autoindent 
+set shiftwidth=4  "this is the level of autoindent, adjust to taste
+set ruler
+set number
+set backspace=indent,eol,start
+
+
+ino jk <esc>
+ino kj <esc>
+nno <c-h> <c-w>h
+nno <c-j> <c-w>j
+nno <c-k> <c-w>k
+nno <c-l> <c-w>l
+nno <c-\> <c-w><c-p>
+colorscheme peachpuff
