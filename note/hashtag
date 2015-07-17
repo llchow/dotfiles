@@ -1,0 +1,22 @@
+sed -n 399,403p tempbuffer.py #printlines
+tmux capture-pane -p -S 62 -t 0:1.1 #tmux #capture
+tmux list-panes -t 1 #tmux #list
+set foldnestmax=2 #vim #folding
+../dev/pytest.sh --with-doctest data/test_firptics.py #pytest
+xmllint --format cstate_file.xml #xml #pretty
+updaterunids #generic_event
+find . -name '*.h' -o -name '*.cpp' >> cscope.files
+find . -mtime -7 \( '*.jpg' -o -name '*.png' \) #find #multiple
+cscope -ub -i cscope.files #build database. -q possibly faster -k kernel mode
+../dev/pytest.sh `grep -l -r --include \*.py \>\>\> .` --with-doctest -v #grep -r by extension
+xml.dom.minidom.parse(fname) or parseString(str) .toprettyxml() #python
+:! make %:r && ./%:r #vim #filename-modifiers
+/bb/bin/getprdwin -u op1 -d "op1 on j953" j953 #pw #prodbackup
+/bb/bin/getprdwin -u op1 -d "op1 on bmrkbt" BMRKBT #pw #beta
+/bb/bin/bbhost -n njbvlnx03 #hostnumber
+bbhost -m bmrkpd #prod #-n for numbers #bmrkbt for beta
+../dev/pytest.sh --nologcapture static_idio/test/simlet_db_loader_test.py #nocapture
+ls -lrt #modification time
+ls -lrt /bb/data/bmrk/logs/bmkfit #fit log
+gpw -b #prdwin #beta
+gpw -s njbvlnx02 #prdwin #single
