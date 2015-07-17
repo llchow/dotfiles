@@ -1,0 +1,74 @@
+#!/usr/bin/env bash
+
+
+LOGIN_SECS=7
+NEW_WINDOW=false
+
+getprdwin() {
+    eval "tmux send-keys -t $1 '/bb/bin/getprdwin -iu op1 -d \"prqs pw\" $2' enter"
+}
+
+
+
+bmrkbt() {
+    tmux new-window
+    tmux rename-window BMRKBT
+    tmux split-window -t 0
+
+    getprdwin 0 j857
+    getprdwin 1 a004
+
+    sleep $LOGIN_SECS
+    tmux setw synchronize-panes on
+    tmux send-keys "set -o emacs && alias ll='ls -lrt' && alias less='less -n'" enter
+}
+
+
+
+singlewin() {
+    if $NEW_WINDOW; then
+        tmux new-window
+        tmux rename-window $1
+        
+        getprdwin 0 $1
+        sleep $LOGIN_SECS
+        tmux send-keys "set -o emacs && alias ll='ls -lrt' && alias less='less -n'" enter
+    else
+        /bb/bin/getprdwin -iu op1 -d "prqs pw" $1
+        #sleep $LOGIN_SECS
+        #tmux send-keys "set -o emacs && alias ll='ls -lrt' && alias less='less -n'" enter
+    fi
+}
+
+
+
+
+while getopts "wbps:" opt; do
+  case $opt in
+    w)
+      NEW_WINDOW=true
+      ;;
+    b)
+      echo "Getting BMRKBT prdwin"
+      bmrkbt
+      exit 0
+      ;;
+    p)
+      echo "G2"
+      exit 0
+      ;;
+    s)
+      echo "Getting prdwin: " $OPTARG
+      singlewin $OPTARG
+      exit 0
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
