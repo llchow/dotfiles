@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+for f in `tmux list-panes -t $1 -F '#{pane_id}'`
+do
+    tmux capture-pane -p -t $f
+done
