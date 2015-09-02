@@ -6,12 +6,15 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'derekwyatt/vim-fswitch'
+Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-commentary'
 Plugin 'ervandew/supertab'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'kien/ctrlp.vim'
+
 
 call vundle#end()
 filetype plugin indent on
@@ -60,7 +63,7 @@ colorscheme peachpuff
 "let mapleader = "."
 "nno \ .
 
-nno <leader>h :nohlsearch<CR>
+nno <silent> mm :nohlsearch<CR>
 
 
 " tmux stuff
@@ -95,7 +98,8 @@ endif
 "set noshowmode
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = ""
-let g:jedi#use_tabs_not_buffers = 0
+"let g:jedi#use_tabs_not_buffers = 0
+let g:jedi#use_splits_not_buffers = "right"
 
 let g:SuperTabDefaultCompletionType = "context"
 
@@ -103,14 +107,8 @@ let g:SuperTabDefaultCompletionType = "context"
 " let g:ogs_project = '/devgit/fipricing'
 " let g:ogs_browser_command = '/home/lchow41/bin/elinks'
 
-" slime options
-let g:slime_no_mappings = 1
-let g:slime_target = "tmux"
-let g:slime_python_ipython = 1
-nmap <c-c><c-c> <Plug>SlimeLineSend
-xmap <c-c><c-c> <Plug>SlimeRegionSend
-imap <c-c><c-c> <esc><Plug>SlimeLineSend
-nmap <c-c>v <Plug>SlimeConfig
+" slime options and functions
+source ~/.vim/startup/slimeopts.vim
 
 
 " fswitch mappings
@@ -166,3 +164,14 @@ set splitright
 "    " show msg when any other cscope db added
 "    set cscopeverbose
 "endif
+
+
+"function! s:get_visual_selection()
+"  " Why is this not a built-in Vim script function?!
+"  let [lnum1, col1] = getpos("'<")[1:2]
+"  let [lnum2, col2] = getpos("'>")[1:2]
+"  let lines = getline(lnum1, lnum2)
+"  let lines[-1] = lines[-1][: col2 - (&selection == 'inclusive' ? 1 : 2)]
+"  let lines[0] = lines[0][col1 - 1:]
+"  return join(lines, "\n")
+"endfunction
