@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+while getopts "t:" opt; do
+  case $opt in
+    t)
+      PANE=$OPTARG
+      shift $((OPTIND - 1))
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+    :)
+      echo "Option -$OPTARG requires an argument." >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ -z "$PANE" ]; then
+    echo "Must specify pane." >&2
+    exit 1
+fi
+
+pipe=$HOME/.tmppipe
+trap "rm -f $pipe; exit" EXIT
+
+if [[ ! -p $pipe ]]; then
+    mkfifo $pipe
+fi
+
+prompt=$(tmux capture-pane -p -t $PANE | grep -v "^$" | tail -n1)
+
+tmux pipe-pane -t $PANE "cat > $pipe"
+tmux send-keys -t $PANE "$@" enter
+
+while true
+do
+    sleep 0.2
+    lastline=$(tmux capture-pane -p -t $PANE | grep -v "^$" | tail -n1)
+    if [[ "$lastline" == $prompt ]]; then
+        tmux pipe-pane -t $PANE
+        break
+    fi
+done
+
+cat < $pipe
+echo
