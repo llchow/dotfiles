@@ -146,7 +146,7 @@ URxvt*color12:#61B8D0
 URxvt*color13:#695ABB
 URxvt*color14:#D53864
 URxvt*color15:#FEFFFE
-!!URxvt*font: 9x15
+!!URxvt.font: 9x15
 !!URxvt.font: xft:monaco:size=10
 !!URxvt.font: xft:Inconsolata:size=14
 !URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=15
