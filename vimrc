@@ -107,6 +107,7 @@ let g:SuperTabDefaultCompletionType = "context"
 " let g:ogs_project = '/devgit/fipricing'
 " let g:ogs_browser_command = '/home/lchow41/bin/elinks'
 
+
 " slime options and functions
 source ~/.vim/startup/slimeopts.vim
 
