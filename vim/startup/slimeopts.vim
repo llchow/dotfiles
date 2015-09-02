@@ -61,6 +61,7 @@ function! SlimeMultiple() range
     let b:slime_config['target_pane'] = saved_target
 endfunction
 
+
 function! SlimeRepeat()
     if !exists("b:slimerepeat") || !exists("b:slimerepeat_savefirst")
         call SlimeRepeatConfig(0)
@@ -182,3 +183,17 @@ nmap <c-c>p :call SlimeIPythonToggle()<cr>
 nmap <c-c><c-x> :call SlimeRepeat()<cr>
 xmap <c-c>f :call SlimeRepeatConfig(1)<cr>
 nmap <c-c>f :call SlimeRepeatConfig(0)<cr>
+
+
+
+
+" start recording
+    " line:
+        " slimesendlines: yank lines, send all at once
+    " region:
+        " slimesendop: yank lines, send all at once
+    " paragraph:
+        " slimesendop: yank lines, send all at once
+    " just need to yank, append to list
+" end recording
+" replay
