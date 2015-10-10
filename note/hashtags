@@ -22,3 +22,4 @@ gpw -b #prdwin #beta
 gpw -s njbvlnx02 #prdwin #single
 git ls-files | grep -e '\.cpp$' -e '\.h$' #list cpp git files
 /opt/swt/bin/ctags --tag-relative=yes -L - -f ./.git/tags #ctag stdin
+:checktime #vim

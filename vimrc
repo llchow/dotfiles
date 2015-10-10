@@ -10,6 +10,7 @@ Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-unimpaired'
 Plugin 'ervandew/supertab'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jpalardy/vim-slime'
@@ -18,6 +19,14 @@ Plugin 'kien/ctrlp.vim'
 
 call vundle#end()
 filetype plugin indent on
+
+colorscheme desert256
+if has("gui_running")
+    set guifont=Monospace\ 14
+    colorscheme desert
+    imap <silent> <S-Insert> <Esc>"*pa
+    "map <silent> <S-Insert> "*p
+endif
 
 syntax on
 
@@ -54,11 +63,7 @@ ino <F9> <esc>:b#<CR>
 nnoremap ' `
 nnoremap ` '
 
-nno <leader>[ :bp<cr>
-nno <leader>] :bn<cr>
-
 set pastetoggle=<F4>
-colorscheme peachpuff
 
 "let mapleader = "."
 "nno \ .
@@ -122,7 +127,7 @@ nmap <silent> <Leader>fsf :FSHere<cr>
 
 " tag stuff
 set tags=./tags;/
-map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
+"map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 let g:ctrlp_extensions = ['tag']
 " need ctags -R .
 " or ctags -R -f ./.git/tags .
