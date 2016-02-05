@@ -15,6 +15,7 @@ Plugin 'ervandew/supertab'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'kien/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
 
 
 call vundle#end()
@@ -55,11 +56,13 @@ cno kj <c-c>
 set hidden
 " Show buffers
 nnoremap <F8> :buffers<CR>:buffer<Space>
-cno <F8> <c-c> <CR>
-ino <F8> <esc>:buffers<CR>:buffer<Space>
+nno <Leader>l :buffers<CR>:buffer<Space>
+nno <silent> <Leader>m :nohlsearch<CR>
+" cno <F8> <c-c> <CR>
+" ino <F8> <esc>:buffers<CR>:buffer<Space>
 
-nno <F9> :b#<CR>
-ino <F9> <esc>:b#<CR>
+" nno <F9> :b#<CR>
+" ino <F9> <esc>:b#<CR>
 nnoremap ' `
 nnoremap ` '
 
@@ -104,7 +107,7 @@ endif
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = ""
 "let g:jedi#use_tabs_not_buffers = 0
-let g:jedi#use_splits_not_buffers = "right"
+"let g:jedi#use_splits_not_buffers = "right"
 
 let g:SuperTabDefaultCompletionType = "context"
 
@@ -129,6 +132,11 @@ nmap <silent> <Leader>fsf :FSHere<cr>
 set tags=./tags;/
 "map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 let g:ctrlp_extensions = ['tag']
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+nmap <Leader>bb :CtrlPBuffer<cr>
+nmap <Leader>bm :CtrlPMixed<cr>
+nmap <Leader>bs :CtrlPMRU<cr>
+
 " need ctags -R .
 " or ctags -R -f ./.git/tags .
 
@@ -146,6 +154,13 @@ augroup END
 
 set splitright
 
+" use ag
+if executable('ag')
+    set grepprg=ag\ --nogroup\ --nocolor
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    "not fast enough to not cache
+    "let g:ctrlp_use_caching = 0
+endif
 
 
 "" loading cscope
