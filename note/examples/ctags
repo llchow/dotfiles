@@ -1,0 +1,1 @@
+function updatectags {(DIR=`git rev-parse --git-dir` && cd $DIR/.. && git ls-files | grep -e '\.cpp$' -e '\.h$' | /bin/ctags --tag-relative=yes -L - -f $DIR/tags)}
