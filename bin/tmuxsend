@@ -22,7 +22,7 @@ if [ -z "$PANE" ]; then
     exit 1
 fi
 
-pipe=$HOME/.tmppipe
+pipe=$HOME/.tmppipe.$$
 trap "rm -f $pipe; exit" EXIT
 
 if [[ ! -p $pipe ]]; then
