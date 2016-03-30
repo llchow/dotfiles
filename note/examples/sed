@@ -1,0 +1,4 @@
+sed -n -e '/FitApp ran result/{x;G;s/\n/ /p;}' -e '/^TRACE/{s/.*CORP|\([^ ]\+\) .\+/\1/; h}' new_issue_runner.log.20151019_073000 > fitresults
+#does not work as intended sed -n -e 'H' -e '/)$/{g;s/\n//g;p}' newissuecstates2015101514423769.csv > newissuecst
+#WIP
+sed -n ':k;/(.*)/!{N;bk};s/\n//g;p' cstatestmp.csv
