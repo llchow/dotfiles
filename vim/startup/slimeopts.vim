@@ -53,13 +53,52 @@ function! SlimeMultiple() range
         SlimeConfig
     endif
     let saved_target = b:slime_config['target_pane']
-    let targets = split(system("tmux -L " . shellescape(b:slime_config['socket_name']) . " list-panes -F '#{session_name}:#{window_index}.#{pane_index}'"))
+    call inputsave()
+    let yn = input('Enter pane spec: ')
+    call inputrestore()
+    let targets = split(system("tmux -L " . shellescape(b:slime_config['socket_name']) . " list-panes -F '#{session_name}:#{window_index}.#{pane_index}' -t " . yn))
+
+    let slime_cmds = []
+    let pat = 'slime_execute {\(\S\+\)}'
+    let lnum = a:firstline
+    while lnum <= a:lastline
+        if getline(lnum) =~ pat
+            let slime_cmds += [matchlist(getline(lnum), pat)[1]]
+        endif
+        let lnum += 1
+    endwhile
+
+    let specpat = '\(\d\+\):\(\d\+\).\(\d\+\)'
     for target in targets
         let b:slime_config['target_pane'] = target
+
+        " substitute pane specific commands
+        let ml =  matchlist(target, specpat)
+        for cmd in slime_cmds
+            let cmd =  substitute(cmd, '#{session_name}', ml[1], 'g')
+            let cmd =  substitute(cmd, '#{window_index}', ml[2], 'g')
+            let cmd =  substitute(cmd, '#{pane_index}', ml[3], 'g')
+            execute 'SlimeSend1 ' . cmd
+        endfor
+
         execute a:firstline . ',' . a:lastline . 'SlimeSend'
     endfor
     let b:slime_config['target_pane'] = saved_target
 endfunction
+
+
+"function! SlimeMultiple() range
+"    if !exists("b:slime_config")
+"        SlimeConfig
+"    endif
+"    let saved_target = b:slime_config['target_pane']
+"    let targets = split(system("tmux -L " . shellescape(b:slime_config['socket_name']) . " list-panes -F '#{session_name}:#{window_index}.#{pane_index}'"))
+"    for target in targets
+"        let b:slime_config['target_pane'] = target
+"        execute a:firstline . ',' . a:lastline . 'SlimeSend'
+"    endfor
+"    let b:slime_config['target_pane'] = saved_target
+"endfunction
 
 
 function! SlimeRepeat()
