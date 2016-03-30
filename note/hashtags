@@ -23,3 +23,13 @@ gpw -s njbvlnx02 #prdwin #single
 git ls-files | grep -e '\.cpp$' -e '\.h$' #list cpp git files
 /opt/swt/bin/ctags --tag-relative=yes -L - -f ./.git/tags #ctag stdin
 :checktime #vim
+:w !diff % - #vim
+/\cSeaRcH #vim #caseless
+ffw -r 2015110411253645 #--host beta/prod #find fit tmux window
+stat -c "%n %y" #mod time #find . -exec stat {} \;
+while read p; do echo $p; done < file #loop through file lines
+while read  -u 10 p; do echo $p; done 10< file #loop through file lines
+find . -name whatever -delete
+gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merge.pdf accept*.pdf
+watch, tail -f #monitor #changes
+DIR=`git rev-parse --git-dir` && cd $DIR/.. && git ls-files | grep -e '\.cpp$' -e '\.h$' -e '\.py' | grep -v bmrk_wrap | /opt/swt/bin/ctags --tag-relative=yes -L - -f $DIR/tags #updatectags
