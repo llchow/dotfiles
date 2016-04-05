@@ -1,0 +1,70 @@
+# Enable forward search
+stty quit undef
+stty -ixon -ixoff
+
+# Some useful aliases
+alias untar="tar xzfv"
+alias ls="ls -F --color=auto"
+alias ll="ls -lrt"
+alias la="ls -la"
+alias ag="ag --pager='less -RFX'"
+
+
+PS1="\[\e[1;33m\]\u@\H:\[\e[1;36m\]\w\[\e[1;37m\]\$\[\e[m\] "
+
+# Other prompts: parse if you dare
+
+#PS1="\[\e[1;34m\]\u@\H:\[\e[1;33m\]\w\[\e[1;34m\]\$\[\e[m\] "
+#PS1="\[\e[1;30m\]\[\e[1;34m\]\u@\H:\[\e[1;33m\]\w\[\e[1;34m\]\$\[\e[m\] "
+#PS1="[\[\e[0;31m\]\u\[\e[m\]@\[\e[0;30m\]\h \[\e[0;34m\]\w\[\e[m\]]\$ "
+#PS1="\n\[\e[1;30m\][$$:$PPID - \j:\!\[\e[1;30m\]]\[\e[0;36m\] \T \[\e[1;30m\][\[\e[1;34m\]\u@\H\[\e[1;30m\]:\[\e[0;37m\]${SSH_TTY:-o} \[\e[0;32m\]+${SHLVL}\[\e[1;
+30m\]] \[\e[1;37m\]\w\[\e[0;37m\] \n\$ "
+
+# Example complete and lazy change dirs
+da() {
+    local DIR=./$(git rev-parse --show-cdup 2>/dev/null)bmrkdata
+    if [ -d $DIR ]; then
+        cd $DIR
+    else
+        cd ~/mbig/bmrk/bmrkdata
+    fi
+    if [ -n "$1" ]; then
+        if [ -d $1 ]; then
+            cd $1
+            pwd
+        else
+            cd $(dirname $1)
+            if [ -f "$(basename $1)" ]; then
+                echo $(pwd)/$(basename $1)
+            else
+                echo $(pwd)
+            fi
+        fi
+    fi
+}
+
+
+_comphost() {
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "$(/bb/bin/bbhost -m 'bmrkpd|bmrkbt')" $cur) )
+}
+
+
+_comprtda () {
+    COMPREPLY=()
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $($1 > /dev/null && compgen -d $cur) )
+}
+
+_comprtda_b () {
+    COMPREPLY=()
+    local cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $($1 > /dev/null && for DS in $(compgen -d $cur | sort); do echo $DS"/"; done && comm -13 <(compgen -d $cur | sort) <(compgen -o default $cur | sor
+t)) )
+}
+
+
+#complete -o nospace -S "/" -F _comprtda rt
+complete -o nospace -F _comprtda_b rt
+complete -o nospace -F _comprtda_b da
+complete -F _comphost gpw
