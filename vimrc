@@ -71,7 +71,6 @@ set pastetoggle=<F4>
 "let mapleader = "."
 "nno \ .
 
-nno <silent> mm :nohlsearch<CR>
 
 
 " tmux stuff
@@ -136,6 +135,9 @@ let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 nmap <Leader>bb :CtrlPBuffer<cr>
 nmap <Leader>bm :CtrlPMixed<cr>
 nmap <Leader>bs :CtrlPMRU<cr>
+nmap <Leader>bt :CtrlPTag<cr>
+nmap <Leader>bd :CtrlPBookmarkDir<cr>
+
 
 " need ctags -R .
 " or ctags -R -f ./.git/tags .
