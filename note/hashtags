@@ -33,3 +33,4 @@ find . -name whatever -delete
 gs -dBATCH -dNOPAUSE -q -sDEVICE=pdfwrite -sOutputFile=merge.pdf accept*.pdf
 watch, tail -f #monitor #changes
 DIR=`git rev-parse --git-dir` && cd $DIR/.. && git ls-files | grep -e '\.cpp$' -e '\.h$' -e '\.py' | grep -v bmrk_wrap | /opt/swt/bin/ctags --tag-relative=yes -L - -f $DIR/tags #updatectags
+conda config --set ssl_verify false
