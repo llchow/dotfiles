@@ -17,4 +17,4 @@ nno <c-j> <c-w>j
 nno <c-k> <c-w>k
 nno <c-l> <c-w>l
 nno <c-\> <c-w><c-p>
-colorscheme peachpuff
+colorscheme desert256
