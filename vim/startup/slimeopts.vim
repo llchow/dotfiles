@@ -203,7 +203,7 @@ function! SlimeDefaultMappings()
     nmap <silent> <c-c><c-c> <Plug>SlimeLineSend
     nmap <silent> <c-c><c-d> <Plug>SlimeParagraphSend
     xmap <silent> <c-c><c-c> <Plug>SlimeRegionSend
-    imap <silent> <c-c><c-c> <esc><Plug>SlimeLineSend
+    "imap <silent> <c-c><c-c> <esc><Plug>SlimeLineSend
 endfunction
 
 
