@@ -1,0 +1,46 @@
+* Multilevel model
+
+** Motivating example: income prediction
+Variables: age, class, gender, race. Suppose we want dependence on city and
+state While this can be accomplished with an /independent categorical variable/
+it assumes that race/gender effects are the same everywhere. A multilevel
+model would allow for different regression coefficients for each predictor in
+each location.
+
+~ ~
+
+* Fixed vs Random effects
+
+Model with categorial predictor - coefficients for that predictor, or
+/effect/, is either fixed or random.
+
+** Random effects are estimated with /partial pooling/, while fixed effect are not.
+
+Group effect estimate is based partially on data from other groups. Contrast
+with
+1. Estimating an effect by completely pooling all groups, and
+2. Estimating an effect for all groups separately.
+
+Why would you partial pool? Assume that deviations of small groups from big
+group (parent group) follow a distribution.
+
+** Example - income vs zip code.
+
+Some zip codes are well represented, while others only cover a few
+households.
+
+Initial model: Take mean income in each zip. Poorly sampled zip will suffer
+from high variance.
+- This can be mitigated by shrinkage (partial pooling), which pushes extreme
+  values towards the mean.
+- The amount of shrinkage should depend on number of obs in zip, number of
+  total obs, individual-level variance in household income, and group-level
+  variance.
+- Random effects model attempt to take these four factors into account for
+  determining the appropriate amount of shrinkage.
+
+** Relationship to Bayesian model.
+
+Top level hyperparameters are not given a prior. In the example, suppose the
+mean income in a given zip code is distributed normally, then a Bayesian
+model would attach priors to the mean and sigma.
