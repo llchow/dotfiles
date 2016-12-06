@@ -1,0 +1,92 @@
+* Item 5 - Functions c++ silently writes and calls
+** C++ auto-generates if you don't declare:
+      - Empty() { ... } // default constructor
+      - Empty(const Empty& rhs) { ... } // copy constructor
+      - ~Empty() { ... } // destructor
+      - Empty& operator=(const Empty& rhs) { ... } //copy assignment operator
+
+** These are needed when:
+      - Empty e1; // default ctor and dtor
+      - Empty e2(e1); // copy constructor
+      - e2 = e1; // copy assignment
+
+If we declare our own ctor, compiler won't generate default ctor.
+
+** Sometimes C++ doesn't know how to autogenerate
+      - class contains a reference member
+      - class contains const members
+      - base class declares copy assignment private
+
+* Item 6 - Explicitly disallow compiler-generated functions
+** Want to disallow statements like:
+Home h1;
+Home h2;
+Home h3(h1); // attempt to copy; should not compile
+h1 = h2; // also should not compile
+
+** If function is not provided, compiler provides it.
+- Solution 1 :: declare and make them private. But member and friends?
+- Solution 2 :: private and don't implement. Linker will complain.
+
+class Home {
+private:
+  Home(const Home&);
+  Home& operator=(const Home&);
+};
+
+- Solution 3 :: Use uncopyable base.
+      + Link error goes to compile time.
+      + Compiler-generated functions will try to call base class counterparts.
+
+class Uncopyable {
+protected:
+  Uncopyable() {}
+  ~Uncopyable() {}
+private:
+  Uncopyable(const Uncopyable&);
+  Uncopyable& operator=(const Uncopyable&);
+};
+
+
+* Item 7 - Declare destructors virtual in polymophic base classes
+- Suppose we have a pointer to a derived class object:
+A* aptr = new B;
+
+- We want to delete, i.e.,
+delete aptr;
+
+- If the dtor for A was non-virtual, then behavior is undefined.
+- In practice, we have a partially destroyed object since only the A part is
+  destroyed.
+- Why not just declare all dtors virtual? This increases complexity of
+  objects and their representation (need a virtual table pointer etc).
+- Rule of thumb: _declare virtual dtor iff class contains virtual functions_.
+- Pure virtual destructor:
+      + If we want base class to be abstract but it doesn't have pure virtual
+      functions.
+      + Still need an empty definition.
+- Some base classes aren't polymorphic, for example Uncopyable.
+
+
+* Item 8 - Prevent exceptions from leaving destructors
+
+
+
+* Item 9
+
+
+
+* Item 10 - Assignment operators result a reference to *THIS
+- Assignments are right associative:
+x = y = z = 15 is the parsed as
+(x = (y = (z = 15)))
+
+- Assignment returns reference to left-hand arg. Convention:
+Class W {
+  W& operator=(const W& rhs) {
+    return *this;
+  }
+
+  W& operator+=(const W& rhs) { ... } // applies here too
+  W& operator=(int rhs) { ... } // also for different parameter type
+};
