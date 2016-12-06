@@ -11,11 +11,14 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-commentary'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-speeddating'
 Plugin 'ervandew/supertab'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'jpalardy/vim-slime'
 Plugin 'kien/ctrlp.vim'
 Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'SirVer/ultisnips'
+Plugin 'jceb/vim-orgmode'
 
 
 call vundle#end()
@@ -43,6 +46,7 @@ set backspace=indent,eol,start
 set visualbell
 set hlsearch
 set incsearch
+set ignorecase
 
 set wildmode=longest,list,full
 set wildmenu
@@ -56,7 +60,7 @@ cno kj <c-c>
 set hidden
 " Show buffers
 nnoremap <F8> :buffers<CR>:buffer<Space>
-nno <Leader>l :buffers<CR>:buffer<Space>
+" nno <Leader>l :buffers<CR>:buffer<Space>
 nno <silent> <Leader>m :nohlsearch<CR>
 " cno <F8> <c-c> <CR>
 " ino <F8> <esc>:buffers<CR>:buffer<Space>
@@ -70,7 +74,7 @@ set pastetoggle=<F4>
 
 "let mapleader = "."
 "nno \ .
-
+nmap <Leader>pp :set filetype=python<cr>
 
 
 " tmux stuff
@@ -81,16 +85,16 @@ if exists('$TMUX')
   nno <silent> <c-k> :TmuxNavigateUp<cr>
   nno <silent> <c-l> :TmuxNavigateRight<cr>
 "  nno <silent> <c-\> :TmuxNavigatePrevious<cr>
-  ino <silent> <c-h> <esc>:TmuxNavigateLeft<cr>
-  ino <silent> <c-j> <esc>:TmuxNavigateDown<cr>
-  ino <silent> <c-k> <esc>:TmuxNavigateUp<cr>
-  ino <silent> <c-l> <esc>:TmuxNavigateRight<cr>
+"  ino <silent> <c-h> <esc>:TmuxNavigateLeft<cr>
+"  ino <silent> <c-j> <esc>:TmuxNavigateDown<cr>
+"  ino <silent> <c-k> <esc>:TmuxNavigateUp<cr>
+"  ino <silent> <c-l> <esc>:TmuxNavigateRight<cr>
 "  ino <silent> <c-\> <esc>:TmuxNavigatePrevious<cr>
 else
-  ino <c-h> <esc><c-w>hi
-  ino <c-j> <esc><c-w>ji
-  ino <c-k> <esc><c-w>ki
-  ino <c-l> <esc><c-w>li
+"  ino <c-h> <esc><c-w>hi
+"  ino <c-j> <esc><c-w>ji
+"  ino <c-k> <esc><c-w>ki
+"  ino <c-l> <esc><c-w>li
 "  ino <c-\> <esc><c-w><c-p>i
   nno <c-h> <c-w>h
   nno <c-j> <c-w>j
@@ -104,7 +108,7 @@ endif
 
 "set noshowmode
 let g:jedi#popup_on_dot = 0
-let g:jedi#show_call_signatures = ""
+let g:jedi#show_call_signatures = "0"
 "let g:jedi#use_tabs_not_buffers = 0
 "let g:jedi#use_splits_not_buffers = "right"
 
@@ -132,12 +136,16 @@ set tags=./tags;/
 "map <C-\> :vsp <CR>:exec("tag ".expand("<cword>"))<CR>
 let g:ctrlp_extensions = ['tag']
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_switch_buffer = 'E'
+let g:ctrlp_clear_cache_on_exit = 0
+
 nmap <Leader>bb :CtrlPBuffer<cr>
 nmap <Leader>bm :CtrlPMixed<cr>
 nmap <Leader>bs :CtrlPMRU<cr>
 nmap <Leader>bt :CtrlPTag<cr>
 nmap <Leader>bd :CtrlPBookmarkDir<cr>
 
+nmap <Leader>df :w !diff % -<cr>
 
 " need ctags -R .
 " or ctags -R -f ./.git/tags .
@@ -164,6 +172,7 @@ if executable('ag')
     "let g:ctrlp_use_caching = 0
 endif
 
+let g:UltiSnipsSnippetDirectories=["UltiSnips", "myultisnips"]
 
 "" loading cscope
 "function! LoadCscope()
