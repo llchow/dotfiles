@@ -1,0 +1,73 @@
+* Rvalues
+~http://thbecker.net/articles/rvalue_references/section_01.html~
+*** Informal definition:
+Lvalue can be on lhs or rhs of an assignment, but Rvalue is an expression
+that can only appear on the rhs. Example:
+
+int a = 1; int b = 1;
+// a and b are both lvalues
+a = b;
+b = a;
+// a * b is an rvalue
+int c = a * b;
+a * b = 42; // not allowed
+
+
+
+** In C++03 temporaries were basically const T&
+** /Rvalues/ are a non-const reference type identified by T&&
+      - These temporaries can be modified after initialization
+      - This allows /move semantics/
+*** Example: cannot bind a non const lvalue reference to an rvalue
+
+class A {};
+A& aref_1 = A(); // Error
+A&& aref_2 = A(); // Ok
+
+** In C++11, objects can have /move constructors/
+      - Also /move assignment operators/
+      - Move ctor used if the object has type T&&
+      - std::move() is a cast that produces rvalue reference to enable move
+** Example: unneeded copying std::vector<T> when pass by value
+      - Steps to copying:
+            0. Temporary is created or returned from function
+            1. Create new vector
+            2. Copy rvalue's data into it
+            3. Temporary is destroyed
+      - With move semantics:
+            0. Move constructor takes rvalue reference
+            1. Copy data out of rvalue into new vector
+            2. Set data inside rvalue to null
+** Consider swapping:
+
+*** Without move:
+swap(T& a, T& b) {
+T tmp(a); // Two copies of a
+a = b; // Two copies of b
+b = tmp; // Two copies of tmp
+}
+
+*** With move:
+swap(T& a, T& b) {
+T tmp(std::move(a);
+a = std::move(b);
+b = std::move(tmp);
+}
+// Move can be desructive, so value of its source not preserved
+
+** std::move: returns lval or rval and return it as an rval
+      - Does not trigger copy construction
+      - Client overload functions (lvalue or rvalue args for copy ctors).
+
+~http://www.open-std.org/jtc1/sc22/wg21/docs/papers/2006/n2027.html#Move_Semantics~
+
+** Temporaries are considered rvalues automatically.
+      - Function return value does not need to be changed to T&& (from T)
+      - So the move constructor is invoked
+** Named vairable will never be considered to be an rvalue even if declared
+      - To get rvalue, use std::move()
+** Example: unique_ptr
+
+Transferring ownership:
+std::unique_ptr<T> p1(new T);
+std::unique_ptr<T> p2(std::move(p1)); // now p2 owns T
