@@ -1,66 +1,103 @@
 #!/usr/bin/env bash
 
+NEW_WINDOW=""
+WINDOW_NAME=PRDWNs
 
-LOGIN_SECS=7
-NEW_WINDOW=false
+sendalias() {
+    while true; do
+        if tmux capture-pane -p -t $2 | grep --silent '^[^\s]*:op1>$'; then
+            tmux send-keys -t $2 "set -o emacs && alias ll='ls -lrt' && alias less='less -n' && function lf {(ls -1drt \"\$@\" | tail -n1)}" enter
+            break
+        fi
+        sleep 0.1
+    done
+}
 
 getprdwin() {
-    eval "tmux send-keys -t $1 '/bb/bin/getprdwin -iu op1 -d \"prqs pw\" $2' enter"
-}
-
-
-
-bmrkbt() {
-    tmux new-window
-    tmux rename-window BMRKBT
-    tmux split-window -t 0
-
-    getprdwin 0 j857
-    getprdwin 1 a004
-
-    sleep $LOGIN_SECS
-    tmux setw synchronize-panes on
-    tmux send-keys "set -o emacs && alias ll='ls -lrt' && alias less='less -n'" enter
-}
-
-
-
-singlewin() {
-    if $NEW_WINDOW; then
-        tmux new-window
-        tmux rename-window $1
-        
-        getprdwin 0 $1
-        sleep $LOGIN_SECS
-        tmux send-keys "set -o emacs && alias ll='ls -lrt' && alias less='less -n'" enter
+    if [ -z "$NEW_WINDOW" ]; then
+        NEW_PANE=`tmux new-window -d -P "/bb/bin/getprdwin -iu op1 -d \"prqs pw\" $1"`
     else
-        /bb/bin/getprdwin -iu op1 -d "prqs pw" $1
-        #sleep $LOGIN_SECS
-        #tmux send-keys "set -o emacs && alias ll='ls -lrt' && alias less='less -n'" enter
+        NEW_PANE=`tmux split-window -d -P -t $NEW_WINDOW "/bb/bin/getprdwin -iu op1 -d \"prqs pw\" $1"`
     fi
+
+    if [[ $NEW_PANE =~ ([a-zA-Z0-9]+:[0-9]+)\.([0-9]+) ]]; then
+        NEW_WINDOW=${BASH_REMATCH[@]:1:1}
+    fi
+
+    sendalias $1 $NEW_PANE
+}
+
+getprdwin_i() {
+    /bb/bin/getprdwin -iu op1 -d "prqs pw" $1
 }
 
 
-
-
-while getopts "wbps:" opt; do
+while getopts "ibpt:n:" opt; do
   case $opt in
-    w)
-      NEW_WINDOW=true
+    i)
+      shift $(($OPTIND - 1))
+      echo "Inline: " $1
+      getprdwin_i $1
+      exit 0
       ;;
     b)
-      echo "Getting BMRKBT prdwin"
-      bmrkbt
+      : ${TMUX:?"Must be run in tmux window"}
+      echo Getting prdwin: BMRKBT
+      i=1
+      for h in $(/bb/bin/bbhost -m bmrkbt)
+      do
+          getprdwin $h
+          if [[ $(( $i % 2 )) == 0 ]]; then
+              tmux rename-window -t $NEW_WINDOW bt$((i/2))
+              NEW_WINDOW=""
+          fi
+          i=$((i+1))
+      done
+
+      #getprdwin j857
+      #getprdwin a004
+      #tmux rename-window -t $NEW_WINDOW bt1
+      #NEW_WINDOW=""
+      #getprdwin 15284
+      #getprdwin 15201
+      #tmux rename-window -t $NEW_WINDOW bt2
       exit 0
       ;;
     p)
-      echo "G2"
+      : ${TMUX:?"Must be run in tmux window"}
+      echo Getting prdwin: BMRKPD
+      i=1
+      for h in $(/bb/bin/bbhost -m bmrkpd)
+      do
+          getprdwin $h
+          if [[ $(( $i % 2 )) == 0 ]]; then
+              tmux rename-window -t $NEW_WINDOW pd$((i/2))
+              NEW_WINDOW=""
+          fi
+          i=$((i+1))
+      done
+      #getprdwin y856
+      #getprdwin y952
+      #tmux rename-window -t $NEW_WINDOW pd1
+      #NEW_WINDOW=""
+      #getprdwin j953
+      #getprdwin b005
+      #tmux rename-window -t $NEW_WINDOW pd2
+      #NEW_WINDOW=""
+      #getprdwin 15399
+      #getprdwin 15286
+      #tmux rename-window -t $NEW_WINDOW pd3
+      #NEW_WINDOW=""
+      #getprdwin 15202
+      #getprdwin 15285
+      #tmux rename-window -t $NEW_WINDOW pd4
       exit 0
       ;;
-    s)
-      echo "Getting prdwin: " $OPTARG
-      singlewin $OPTARG
-      exit 0
+    t)
+      NEW_WINDOW=$OPTARG
+      ;;
+    n)
+      WINDOW_NAME=$OPTARG
       ;;
     \?)
       echo "Invalid option: -$OPTARG" >&2
@@ -72,3 +109,25 @@ while getopts "wbps:" opt; do
       ;;
   esac
 done
+
+if [ -z "$TMUX" ]; then
+    echo "Inline: " $1
+    getprdwin_i $1
+    exit 0
+fi
+
+
+shift $(($OPTIND - 1))
+echo Getting prdwin: "$@"
+for host in "$@"
+do
+    getprdwin $host
+    #tmux select-layout -t $NEW_WINDOW even-vertical
+done
+
+NUM_PANES=$(tmux list-panes -t $NEW_WINDOW | wc -l)
+if [ "$NUM_PANES" -eq 1 ]; then
+    tmux rename-window -t $NEW_WINDOW $host
+else
+    tmux rename-window -t $NEW_WINDOW $WINDOW_NAME
+fi
