@@ -25,7 +25,7 @@
 ! to choose from (athena and motif).  The following resource sets
 ! the look-and-feel:
 
-*lookAndFeel: motif
+!*lookAndFeel: motif
 *Xcursor.size: 12
 
 ! The following resources sets the background for all X-clients
@@ -71,16 +71,16 @@ xterm*loginShell:true
 ! The following sets the customization resource to get 
 ! special app-defaults, if they exist:
 
-#ifdef COLOR
-*Customization: -color
-#else
-*Customization: -mono
-#endif
+!#ifdef COLOR
+!*Customization: -color
+!#else
+!*Customization: -mono
+!#endif
 
 !XTerm*faceName: Bitstream Vera Sans Mono:size=14
 XTerm*termName: xterm-256color
-XTerm*faceName: consolas
-XTerm*background: #1D1D19
+!XTerm*faceName: consolas
+XTerm*background: #000000
 XTerm*foreground: #f6f5ee
 XTerm*color0:#000000
 XTerm*color1:#D01B24
@@ -101,7 +101,7 @@ XTerm*color15:#FEFFFE
 !XTerm*font: *-fixed-*-*-*-18-*
 !XTerm*boldfont: *-fixed-*-*-*-18-*
 !XTerm*selectToClipboard: true
-
+XTerm*scrollBar: false
 
 !! XTerm settings
 !XTerm*faceName: DejaVu Sans Mono:size=12
@@ -113,47 +113,47 @@ XTerm*color15:#FEFFFE
 !*ttyModes: erase ^?
 
 
-Mwm.keyboardFocusPolicy:        explicit
-Mwm*XClock*clientDecoration:    Border
-Mwm*XBiff*clientDecoration:     Border
-Mwm*iconDecoration:             label activelabel
-Mwm*iconPlacement:              bottom right
-rxvtop1*background:lightgray
-rxvtop1*foreground:Black
-rxvtop*background:Black
-rxvtop*foreground:Yellow
-rxvtop2*background:Black
-rxvtop2*foreground:Green
+!Mwm.keyboardFocusPolicy:        explicit
+!Mwm*XClock*clientDecoration:    Border
+!Mwm*XBiff*clientDecoration:     Border
+!Mwm*iconDecoration:             label activelabel
+!Mwm*iconPlacement:              bottom right
+!rxvtop1*background:lightgray
+!rxvtop1*foreground:Black
+!rxvtop*background:Black
+!rxvtop*foreground:Yellow
+!rxvtop2*background:Black
+!rxvtop2*foreground:Green
 
 !!URxvt.perl-lib:/home/lchow41/.urxvt/ext
 !!URxvt.perl-ext-common: tabbedex
 !!URxvt.perl-ext-common: tabbed
-URxvt*background: #1D1D19
-URxvt*foreground: #f6f5ee
-URxvt*color0:#000000
-URxvt*color1:#D01B24
-URxvt*color2:#A7D32C
-URxvt*color3:#D8CF67
-URxvt*color4:#61B8D0
-URxvt*color5:pink
-URxvt*color6:#D53864
-URxvt*color7:#FEFFFE
-URxvt*color8:#1C1D19
-URxvt*color9=:D12A24
-URxvt*color10:#A7D32C
-URxvt*color11:#D8CF67
-URxvt*color12:#61B8D0
-URxvt*color13:#695ABB
-URxvt*color14:#D53864
-URxvt*color15:#FEFFFE
+!URxvt*background: #1D1D19
+!URxvt*foreground: #f6f5ee
+!URxvt*color0:#000000
+!URxvt*color1:#D01B24
+!URxvt*color2:#A7D32C
+!URxvt*color3:#D8CF67
+!URxvt*color4:#61B8D0
+!URxvt*color5:pink
+!URxvt*color6:#D53864
+!URxvt*color7:#FEFFFE
+!URxvt*color8:#1C1D19
+!URxvt*color9=:D12A24
+!URxvt*color10:#A7D32C
+!URxvt*color11:#D8CF67
+!URxvt*color12:#61B8D0
+!URxvt*color13:#695ABB
+!URxvt*color14:#D53864
+!URxvt*color15:#FEFFFE
 !!URxvt.font: 9x15
 !!URxvt.font: xft:monaco:size=10
 !!URxvt.font: xft:Inconsolata:size=14
 !URxvt.font: xft:Bitstream Vera Sans Mono:pixelsize=15
 !!URxvt.font: Inconsolata:style=Medium
 !!URxvt.font: 9x18
-URxvt*loginShell: true
-URxvt.scrollBar: false
+!URxvt*loginShell: true
+!URxvt.scrollBar: false
 !URxvt.scrollstyle: plain
 !URxvt.iso14755: false
 !URxvt.iso14755_52: false
