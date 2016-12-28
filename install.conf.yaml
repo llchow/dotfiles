@@ -10,3 +10,10 @@
     ~/.note: note/
     ~/bin: bin/
     ~/.Xdefaults: Xdefaults
+
+- shell:
+  - [git submodule update --init --recursive, Updating submodules]
+  - command: vim +PluginInstall +qall
+    stdin: true
+    stdout: true
+    stderr: true
