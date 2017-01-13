@@ -1,3 +1,0 @@
-* Multiindex
-DataFrame.index.levels[i]
-DataFrame.index.get_level_values(ind)
