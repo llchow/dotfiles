@@ -36,3 +36,5 @@ DIR=`git rev-parse --git-dir` && cd $DIR/.. && git ls-files | grep -e '\.cpp$' -
 conda config --set ssl_verify false
 find src -name '*.t.h' -and ! -name '*inspector.t.h' -print0 | xargs -0 rename .t.h .t.h\# #unittest #silence
 plt.get_fignums #matplotlib #pyplot
+git rev-parse --abbrev-ref HEAD #current branch name
+paste -sd+ | bc #sum stdin list
