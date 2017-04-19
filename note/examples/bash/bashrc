@@ -68,3 +68,14 @@ t)) )
 complete -o nospace -F _comprtda_b rt
 complete -o nospace -F _comprtda_b da
 complete -F _comphost gpw
+
+export PAGER="less -R"
+export EDITOR="vi"
+
+typeset -x KRB5CCNAME=$HOME/.krb5cc
+
+function updatectags {(DIR=`git rev-parse --git-dir` && cd $DIR/.. && git ls-files | grep -e '\.cpp$' -e '\.h$' -e '\.py' | ctags --tag-relative=yes -L - -f $DIR/tags)}
+
+if [ -z $TMUX ]; then
+    export TERM=xterm-256color
+fi
