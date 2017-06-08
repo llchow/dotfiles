@@ -30,6 +30,9 @@ if has("gui_running")
     colorscheme desert
     imap <silent> <S-Insert> <Esc>"*pa
     "map <silent> <S-Insert> "*p
+    set guioptions=egmt
+    set lines=50
+    set columns=168
 endif
 
 syntax on
@@ -47,6 +50,7 @@ set visualbell
 set hlsearch
 set incsearch
 set ignorecase
+set clipboard=unnamedplus
 
 set wildmode=longest,list,full
 set wildmenu
