@@ -38,3 +38,7 @@ find src -name '*.t.h' -and ! -name '*inspector.t.h' -print0 | xargs -0 rename .
 plt.get_fignums #matplotlib #pyplot
 git rev-parse --abbrev-ref HEAD #current branch name
 paste -sd+ | bc #sum stdin list
+diskutil erasevolume HFS+ "ramdisk" `hdiutil attach -nomount ram://16388608` #osx #ramdisk
+pp #pdb pretty print
+:e ++ff=unix #vim unix line ending
+:set ff=unix #vim unix line ending
