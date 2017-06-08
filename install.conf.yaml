@@ -10,6 +10,7 @@
     ~/.note: note/
     ~/bin: bin/
     ~/.Xdefaults: Xdefaults
+    ~/.gitconfig: gitconfig
 
 - shell:
   - [git submodule update --init --recursive, Updating submodules]
