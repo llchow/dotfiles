@@ -45,3 +45,9 @@ pp #pdb pretty print
 git merge-base HEAD master
 git diff --name-only
 Series.idxmax #pandas #index
+pkgutil.get_loader(<name>).filename #python #import
+imp.find_module(<name>) #python #import
+git stash --keep-index
+' '.join(mystring.split()) #python #whitespace
+git branch -u origin/my_branch #--set-upstream-to
+git push -u origin my_branch
