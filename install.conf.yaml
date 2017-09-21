@@ -14,6 +14,7 @@
 
 - shell:
   - [git submodule update --init --recursive, Updating submodules]
+  - [git config --global core.editor $(which vim), Setting git editor]
   - command: vim +PluginInstall +qall
     stdin: true
     stdout: true
