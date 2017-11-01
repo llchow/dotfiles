@@ -1,0 +1,13 @@
+ino jk <esc>
+ino kj <esc>
+
+set surround
+set ignorecase
+set incsearch
+set visualbell
+set clipboard=unnamed
+
+nno <c-h> <c-w>h
+nno <c-j> <c-w>j
+nno <c-k> <c-w>k
+nno <c-l> <c-w>l
