@@ -9,6 +9,7 @@
     autocrlf = false
     safecrlf = true
     eol = lf
+    editor = /usr/bin/vim
 [alias]
     br = branch
     f = fetch
