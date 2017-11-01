@@ -51,3 +51,11 @@ git stash --keep-index
 ' '.join(mystring.split()) #python #whitespace
 git branch -u origin/my_branch #--set-upstream-to
 git push -u origin my_branch
+pm-suspend #ubuntu #sleep
+git subtree add --squash --prefix=pikaday <remote> master
+git subtree pull --squash --prefix=pikaday <remote> master
+git subtree push --prefix=pikaday <remote> master
+docker container prune
+docker run -v <localpath>:<containerpath> -p 0.0.0.0:8888:8080 --user <user> -it <image> <command>
+curl -X GET <host>/v2/_catalog #docker
+curl -X GET <host>/v2/<path>/tags/list #docker
