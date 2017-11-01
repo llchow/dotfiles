@@ -9,6 +9,7 @@ alias ll="ls -lrt"
 alias la="ls -la"
 alias ag="ag --pager='less -RFX'"
 
+if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi
 
 PS1="\[\e[1;33m\]\u@\H:\[\e[1;36m\]\w\[\e[1;37m\]\$\[\e[m\] "
 
