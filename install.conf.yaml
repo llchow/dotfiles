@@ -3,6 +3,7 @@
 - link:
     ~/.dotfiles: ''
     ~/.tmux.conf: tmux.conf
+    ~/.tmux-osx.conf: tmux-osx.conf
     ~/.tmux: tmux
     ~/.vimrc: vimrc
     ~/.vimrc_f: vimrc_f
@@ -12,10 +13,13 @@
     ~/bin: bin/
     ~/.Xdefaults: Xdefaults
     ~/.gitconfig: gitconfig
+    ~/.Rprofile: Rprofile
+    ~/.Renviron: Renviron
 
 - shell:
   - [git submodule update --init --recursive, Updating submodules]
   - [git config --global core.editor $(which vim), Setting git editor]
+  - [mkdir -p ~/R/library]
   - command: vim +PluginInstall +qall
     stdin: true
     stdout: true
