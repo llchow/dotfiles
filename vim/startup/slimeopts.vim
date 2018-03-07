@@ -224,6 +224,9 @@ xmap <c-c>f :call SlimeRepeatConfig(1)<cr>
 nmap <c-c>f :call SlimeRepeatConfig(0)<cr>
 
 
+execute "set <M-E>=\eE"
+nmap <M-E> <c-c><c-c>j
+xmap <M-E> <c-c><c-c>
 
 
 " start recording
