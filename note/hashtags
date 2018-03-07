@@ -59,3 +59,4 @@ docker container prune
 docker run -v <localpath>:<containerpath> -p 0.0.0.0:8888:8080 --user <user> -it <image> <command>
 curl -X GET <host>/v2/_catalog #docker
 curl -X GET <host>/v2/<path>/tags/list #docker
+git fetch origin master:master #fast-forward only
