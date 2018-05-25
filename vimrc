@@ -19,6 +19,7 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'FelikZ/ctrlp-py-matcher'
 Plugin 'SirVer/ultisnips'
 Plugin 'jceb/vim-orgmode'
+Plugin 'Vimjas/vim-python-pep8-indent'
 
 
 call vundle#end()
