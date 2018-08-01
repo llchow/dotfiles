@@ -60,3 +60,5 @@ docker run -v <localpath>:<containerpath> -p 0.0.0.0:8888:8080 --user <user> -it
 curl -X GET <host>/v2/_catalog #docker
 curl -X GET <host>/v2/<path>/tags/list #docker
 git fetch origin master:master #fast-forward only
+defaults write -g ApplePressAndHoldEnabled -bool false
+wget https://raw.githubusercontent.com/<user>/<repo>/<branch>/<path-to-file>
