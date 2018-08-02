@@ -114,6 +114,7 @@ endif
 "set noshowmode
 let g:jedi#popup_on_dot = 0
 let g:jedi#show_call_signatures = "0"
+let g:jedi#goto_command = "gd"
 "let g:jedi#use_tabs_not_buffers = 0
 "let g:jedi#use_splits_not_buffers = "right"
 

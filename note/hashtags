@@ -62,3 +62,5 @@ curl -X GET <host>/v2/<path>/tags/list #docker
 git fetch origin master:master #fast-forward only
 defaults write -g ApplePressAndHoldEnabled -bool false
 wget https://raw.githubusercontent.com/<user>/<repo>/<branch>/<path-to-file>
+curl -i -X POST -H 'Content-Type: application/json' -d '{"key": "value"}' http://restapi/route
+git gc --prune=now

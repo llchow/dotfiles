@@ -7,3 +7,4 @@ ktutil:  wkt username.keytab
 ktutil:  quit
 
 k5start -U -f $keytab -x -v -b -K 60
+kinit username@BLAH.EDU -k -t keytabfile.keytab

@@ -8,6 +8,10 @@ alias ls="ls -F --color=auto"
 alias ll="ls -lrt"
 alias la="ls -la"
 alias ag="ag --pager='less -RFX'"
+alias v='vim'
+
+# export CYGWIN="winsymlinks:nativestrict"
+# see stackoverflow 18654162
 
 if [ -e /usr/bin/vimx ]; then alias vim='/usr/bin/vimx'; fi
 
