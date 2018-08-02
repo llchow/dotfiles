@@ -15,6 +15,7 @@
     ~/.gitconfig: gitconfig
     ~/.Rprofile: Rprofile
     ~/.Renviron: Renviron
+    ~/.emacs: emacs
 
 - shell:
   - [git submodule update --init --recursive, Updating submodules]
