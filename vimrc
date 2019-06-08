@@ -179,6 +179,7 @@ if executable('ag')
 endif
 
 let g:UltiSnipsSnippetDirectories=["UltiSnips", "myultisnips"]
+set foldmethod=marker
 
 "" loading cscope
 "function! LoadCscope()
