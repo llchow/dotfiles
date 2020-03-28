@@ -1,0 +1,11 @@
+download armhf citrix workspace for debian on citrix website
+
+sudo dpkg -i icaclient_**.deb
+
+get SSL Error
+
+download missing root certificate (DigiCert High Assurance EV Root CA - PEM)
+
+copy to /opt/Citrix/ICAClient/keystore/cacerts/
+
+run /opt/Citrix/ICAClient/util/ctx_rehash
