@@ -111,7 +111,7 @@
 
        use obconf if you want to change these without having to log out
        and back in -->
-    <number>1</number>
+    <number>2</number>
     <firstdesk>1</firstdesk>
     <names>
       <!-- set names up here if you want to, like this:
@@ -119,7 +119,7 @@
     <name>desktop 2</name>
     -->
     </names>
-    <popupTime>875</popupTime>
+    <popupTime>0</popupTime>
     <!-- The number of milliseconds to show the popup for when switching
        desktops.  Set this to 0 to disable the popup. -->
   </desktops>
@@ -176,7 +176,9 @@
       <action name="MoveResizeTo">
         <width>50%</width>
       </action>
-      <action name="MoveToEdge"><direction>west</direction></action>
+      <action name="MoveToEdge">
+        <direction>west</direction>
+      </action>
     </keybind>
     <keybind key="C-A-Right">
       <action name="UnmaximizeFull"/>
@@ -184,7 +186,9 @@
       <action name="MoveResizeTo">
         <width>50%</width>
       </action>
-      <action name="MoveToEdge"><direction>east</direction></action>
+      <action name="MoveToEdge">
+        <direction>east</direction>
+      </action>
     </keybind>
     <keybind key="C-A-Down">
       <action name="Unmaximize"/>
@@ -254,7 +258,7 @@
     </keybind>
     <keybind key="C-A-T">
       <action name="Execute">
-         <command>x-terminal-emulator</command>
+        <command>x-terminal-emulator</command>
       </action>
     </keybind>
     <!--keybindings for LXPanel -->
@@ -275,7 +279,7 @@
     </keybind>
     <keybind key="C-A-M">
       <action name="Execute">
-         <command>lxpanelctl move</command>
+        <command>lxpanelctl move</command>
       </action>
     </keybind>
     <keybind key="A-F11">
@@ -326,12 +330,12 @@
     </keybind>
     <keybind key="C-A-End">
       <action name="Execute">
-         <command>lxde-pi-shutdown-helper</command>
+        <command>lxde-pi-shutdown-helper</command>
       </action>
     </keybind>
     <keybind key="C-A-Delete">
       <action name="Execute">
-         <command>lxde-pi-shutdown-helper</command>
+        <command>lxde-pi-shutdown-helper</command>
       </action>
     </keybind>
   </keyboard>
@@ -686,14 +690,13 @@
     <!-- show the manage desktops section in the client-list-(combined-)menu -->
   </menu>
   <applications>
-  	<application name="panel">
-	<skip_taskbar>yes</skip_taskbar>
-	<layer>above</layer>
-	</application>
-	<application name="panel" type="dock">
-	<layer>below</layer>
-	</application>
-  
+    <application name="panel">
+      <skip_taskbar>yes</skip_taskbar>
+      <layer>above</layer>
+    </application>
+    <application name="panel" type="dock">
+      <layer>below</layer>
+    </application>
     <!--
   # this is an example with comments through out. use these to make your
   # own rules, but without the comments of course.
