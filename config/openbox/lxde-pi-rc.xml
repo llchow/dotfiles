@@ -190,6 +190,12 @@
         <direction>east</direction>
       </action>
     </keybind>
+    <keybind key="C-W-Left">
+      <action name="GoToDesktop"><to>left</to><wrap>no</wrap></action>
+    </keybind>
+    <keybind key="C-W-Right">
+      <action name="GoToDesktop"><to>right</to><wrap>no</wrap></action>
+    </keybind>
     <keybind key="C-A-Down">
       <action name="Unmaximize"/>
     </keybind>
