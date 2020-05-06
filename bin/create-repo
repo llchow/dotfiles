@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+BARE=/tmp/${PWD##*/}.git
+SERVER=do
+
+git init
+git add .
+git commit -m 'initial commit'
+git clone --bare . $BARE
+scp -r $BARE $SERVER:/home/llchow/repos/
